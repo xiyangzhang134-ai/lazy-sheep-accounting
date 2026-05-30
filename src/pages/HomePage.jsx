@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import TransactionForm from '../components/TransactionForm';
 import TransactionList from '../components/TransactionList';
 import NavBar from '../components/NavBar';
+import InstallPrompt from '../components/InstallPrompt';
 import { useRecords } from '../hooks/useData';
 import { generateId } from '../utils/storage';
 
@@ -43,6 +44,9 @@ export default function HomePage() {
         <div className="absolute -top-20 -right-20 h-64 w-64 rounded-full bg-pink-200/30 blur-3xl" />
         <div className="absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-purple-200/25 blur-3xl" />
       </div>
+
+      {/* PWA 安装提示 */}
+      <InstallPrompt />
 
       <div className="relative mx-auto max-w-lg px-4 py-8 pb-24">
         <Header
