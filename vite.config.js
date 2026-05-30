@@ -5,6 +5,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/lazy-sheep-accounting/',
   plugins: [
     react(),
     tailwindcss(),
@@ -21,7 +22,7 @@ export default defineConfig({
               cacheName: 'external-cache',
               expiration: {
                 maxEntries: 50,
-                maxAgeSeconds: 60 * 60 * 24 * 7, // 7 days
+                maxAgeSeconds: 60 * 60 * 24 * 7,
               },
             },
           },
@@ -31,7 +32,7 @@ export default defineConfig({
         name: '懒羊羊记账',
         short_name: '懒羊羊记账',
         description: '可爱又懒洋洋的个人记账小助手，轻松记录每一笔收支',
-        start_url: '/',
+        start_url: '/lazy-sheep-accounting/',
         display: 'standalone',
         orientation: 'portrait',
         theme_color: '#fbbf24',
@@ -39,22 +40,16 @@ export default defineConfig({
         lang: 'zh-CN',
         icons: [
           {
-            src: '/icon.svg',
+            src: 'icon.svg',
             sizes: '512x512',
             type: 'image/svg+xml',
             purpose: 'any maskable',
           },
           {
-            src: '/icon.svg',
+            src: 'icon.svg',
             sizes: '192x192',
             type: 'image/svg+xml',
             purpose: 'any',
-          },
-          {
-            src: '/icon.svg',
-            sizes: '512x512',
-            type: 'image/svg+xml',
-            purpose: 'maskable',
           },
         ],
       },
