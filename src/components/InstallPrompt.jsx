@@ -1,17 +1,24 @@
 import { useState, useEffect } from 'react';
 
-// iOS 检测
 function isIOS() {
   return /iphone|ipad|ipod/i.test(navigator.userAgent);
 }
 
-// 是否已在 PWA standalone 模式
-function isStandalone() {
-  return window.matchMedia('(display-mode: standalone)').matches
-    || navigator.standalone;  // iOS
+function isAndroid() {
+  return /android/i.test(navigator.userAgent);
 }
 
-// sessionStorage 关闭标记
+/** Chrome 系（支持 beforeinstallprompt） */
+function isChrome() {
+  return /chrome|crios/i.test(navigator.userAgent);
+}
+
+function isStandalone() {
+  return window.matchMedia('(display-mode: standalone)').matches
+    || navigator.standalone
+    || /standalone/i.test(window.location.search); // 部分三星浏览器
+}
+
 function wasDismissed() {
   try { return sessionStorage.getItem('install-dismissed') === '1'; }
   catch { return false; }
@@ -23,44 +30,56 @@ function markDismissed() {
 
 export default function InstallPrompt() {
   const [show, setShow] = useState(false);
-  const [deferred, setDeferred] = useState(null);  // Android beforeinstallprompt
-  const [platform, setPlatform] = useState(null);    // 'android' | 'ios' | null
+  const [deferred, setDeferred] = useState(null);
+  const [platform, setPlatform] = useState(null);
+  // 'chrome' = Android Chrome 一键安装
+  // 'android' = Android 其他浏览器，手动引导
+  // 'ios' = iOS Safari
 
   useEffect(() => {
-    if (isStandalone()) return;   // 已安装 PWA
-    if (wasDismissed()) return;   // 本次会话已关闭
+    if (isStandalone()) return;
+    if (wasDismissed()) return;
 
-    // Android / Chrome 原生安装事件
-    const handleBIP = (e) => {
-      e.preventDefault();
-      setDeferred(e);
-      setPlatform('android');
-      setShow(true);
-    };
-    window.addEventListener('beforeinstallprompt', handleBIP);
+    // ── Android ──────────────────────
+    if (isAndroid()) {
+      if (isChrome()) {
+        // Chrome：等 beforeinstallprompt
+        const handleBIP = (e) => {
+          e.preventDefault();
+          setDeferred(e);
+          setPlatform('chrome');
+          setShow(true);
+        };
+        window.addEventListener('beforeinstallprompt', handleBIP);
+        return () => window.removeEventListener('beforeinstallprompt', handleBIP);
+      } else {
+        // 非 Chrome（三星、小米、华为、火狐、UC 等）：直接弹引导
+        const timer = setTimeout(() => {
+          setPlatform('android');
+          setShow(true);
+        }, 1200);
+        return () => clearTimeout(timer);
+      }
+    }
 
-    // iOS：没有 beforeinstallprompt，延迟 1.5s 显示引导
-    let iOSTimer;
-    if (isIOS() && !isStandalone()) {
-      iOSTimer = setTimeout(() => {
+    // ── iOS ──────────────────────────
+    if (isIOS()) {
+      const timer = setTimeout(() => {
         setPlatform('ios');
         setShow(true);
       }, 1500);
+      return () => clearTimeout(timer);
     }
 
-    return () => {
-      window.removeEventListener('beforeinstallprompt', handleBIP);
-      clearTimeout(iOSTimer);
-    };
+    // 桌面跳过
   }, []);
 
+  // Chrome 一键安装
   const handleInstall = async () => {
-    if (platform === 'android' && deferred) {
+    if (platform === 'chrome' && deferred) {
       deferred.prompt();
       const result = await deferred.userChoice;
-      if (result.outcome === 'accepted') {
-        setShow(false);
-      }
+      if (result.outcome === 'accepted') setShow(false);
       setDeferred(null);
     }
   };
@@ -71,6 +90,8 @@ export default function InstallPrompt() {
   };
 
   if (!show) return null;
+
+  const isChromeAndroid = platform === 'chrome';
 
   return (
     <div
@@ -90,20 +111,28 @@ export default function InstallPrompt() {
         <p className="text-sm font-extrabold text-amber-600">
           添加到主屏幕
         </p>
-        {platform === 'android' ? (
+        {platform === 'ios' ? (
+          <p className="text-xs text-gray-500 mt-0.5 leading-relaxed">
+            点 Safari 底部
+            <svg className="inline-block align-middle mx-0.5 h-4 w-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" /></svg>
+            → 添加到主屏幕
+          </p>
+        ) : isChromeAndroid ? (
           <p className="text-xs text-gray-500 mt-0.5">
-            点击按钮一键安装，像原生 App 一样使用
+            点击「安装」一键添加到桌面，像 App 一样使用
           </p>
         ) : (
-          <p className="text-xs text-gray-500 mt-0.5">
-            点 Safari 底部 <span className="inline-block align-middle mx-0.5"><svg className="h-4 w-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" /></svg></span> → 添加到主屏幕
+          <p className="text-xs text-gray-500 mt-0.5 leading-relaxed">
+            点浏览器右上角
+            <span className="inline-flex align-middle mx-0.5 items-center justify-center h-4 w-4 rounded bg-gray-200 text-[10px] font-bold text-gray-500">⋮</span>
+            菜单 → 添加到主屏幕
           </p>
         )}
       </div>
 
       {/* 右侧按钮 */}
       <div className="flex shrink-0 items-center gap-1.5">
-        {platform === 'android' ? (
+        {isChromeAndroid ? (
           <button
             onClick={handleInstall}
             className="rounded-xl bg-gradient-to-r from-emerald-400 to-teal-400 px-3 py-1.5 text-xs font-bold text-white shadow-soft-sm transition-all hover:from-emerald-500 hover:to-teal-500 active:scale-95"
@@ -113,7 +142,7 @@ export default function InstallPrompt() {
         ) : (
           <button
             onClick={handleDismiss}
-            className="rounded-xl bg-gradient-to-r from-pink-400 to-purple-400 px-3 py-1.5 text-xs font-bold text-white shadow-soft-sm transition-all hover:from-pink-500 hover:to-purple-500 active:scale-95"
+            className="rounded-xl bg-gradient-to-r from-emerald-400 to-teal-400 px-3 py-1.5 text-xs font-bold text-white shadow-soft-sm transition-all hover:from-emerald-500 hover:to-teal-500 active:scale-95"
           >
             知道了
           </button>
