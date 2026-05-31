@@ -13,7 +13,7 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['icon.svg', 'icon-512.png', 'icon-192.png'],
       workbox: {
-        globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
+        globPatterns: ['**/*.{js,css,html,svg,png,apk,woff2}'],
         runtimeCaching: [
           {
             urlPattern: /^https?:\/\/.*/i,
