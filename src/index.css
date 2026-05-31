@@ -69,3 +69,138 @@ input:focus, select:focus, textarea:focus {
   from { opacity: 0; transform: translateY(-4px) scale(0.95); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
 }
+
+/* ══════════════════════════════════════
+   可爱小动物动画合集
+   ══════════════════════════════════════ */
+
+/* 🐣 小鸡破壳 — 上下点头啄米 */
+@keyframes hatch {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  15%      { transform: translateY(-6px) rotate(-3deg); }
+  30%      { transform: translateY(2px) rotate(0deg); }
+  45%      { transform: translateY(-2px) rotate(2deg); }
+  60%      { transform: translateY(-8px) rotate(-2deg); }
+  75%      { transform: translateY(0) rotate(1deg); }
+}
+.animate-hatch {
+  animation: hatch 1.2s ease-in-out infinite;
+}
+
+/* 🦊 火焰小狐 — 左右摇摆跳跃 */
+@keyframes fox {
+  0%, 100% { transform: translateY(0) scale(1); }
+  20%      { transform: translateY(-10px) translateX(-4px) scale(1.05); }
+  40%      { transform: translateY(-2px) translateX(2px) scale(0.98); }
+  60%      { transform: translateY(-8px) translateX(4px) scale(1.03); }
+  80%      { transform: translateY(-1px) translateX(-2px) scale(0.99); }
+}
+.animate-fox {
+  animation: fox 1.8s ease-in-out infinite;
+}
+
+/* 🐧 帝企鹅 — 左右摇摆走路 */
+@keyframes penguin {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  25%      { transform: rotate(-8deg) translateY(-3px); }
+  50%      { transform: rotate(0deg) translateY(0); }
+  75%      { transform: rotate(8deg) translateY(-3px); }
+}
+.animate-penguin {
+  animation: penguin 1s ease-in-out infinite;
+}
+
+/* 🐰 星星小兔 — 连续弹跳 */
+@keyframes bunny {
+  0%, 100% { transform: translateY(0) scale(1, 1); }
+  10%      { transform: translateY(0) scale(1.1, 0.9); }
+  30%      { transform: translateY(-16px) scale(0.95, 1.1); }
+  50%      { transform: translateY(0) scale(1, 1); }
+  60%      { transform: translateY(-4px) scale(1.02, 0.98); }
+  70%      { transform: translateY(0) scale(1, 1); }
+}
+.animate-bunny {
+  animation: bunny 1s ease-in-out infinite;
+}
+
+/* 🐱 记账小猫 — 伸懒腰 + 招手 */
+@keyframes cat {
+  0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+  20%      { transform: translateY(-6px) rotate(-5deg) scale(1.05); }
+  40%      { transform: translateY(-3px) rotate(3deg) scale(1); }
+  60%      { transform: translateY(-8px) rotate(-3deg) scale(1.04); }
+  80%      { transform: translateY(-1px) rotate(1deg) scale(0.98); }
+}
+.animate-cat {
+  animation: cat 2s ease-in-out infinite;
+}
+
+/* 🐶 理财汪汪 — 欢快跳跃 + 尾巴摇 */
+@keyframes dog {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  15%      { transform: translateY(-12px) rotate(-4deg); }
+  30%      { transform: translateY(-3px) rotate(2deg); }
+  45%      { transform: translateY(-10px) rotate(4deg); }
+  60%      { transform: translateY(-2px) rotate(-2deg); }
+  75%      { transform: translateY(-6px) rotate(0deg); }
+}
+.animate-dog {
+  animation: dog 1.5s ease-in-out infinite;
+}
+
+/* 🐻 管家熊熊 — 憨憨摇摆 */
+@keyframes bear {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  20%      { transform: rotate(-6deg) translateY(-4px); }
+  40%      { transform: rotate(4deg) translateY(-2px); }
+  60%      { transform: rotate(-4deg) translateY(-6px); }
+  80%      { transform: rotate(6deg) translateY(-2px); }
+}
+.animate-bear {
+  animation: bear 2.2s ease-in-out infinite;
+}
+
+/* 通用软弹跳 */
+@keyframes bounce-soft {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+.animate-bounce-soft {
+  animation: bounce-soft 1.5s ease-in-out infinite;
+}
+
+/* 小幅度弹跳（徽章栏动物图标） */
+@keyframes bounce-small {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-3px); }
+}
+.animate-bounce-small {
+  animation: bounce-small 2s ease-in-out infinite;
+}
+
+/* 💕 爱心/星星飘浮上升 */
+@keyframes float-up {
+  0%   { transform: translateY(0) scale(0.5) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(-100vh) scale(1.2) rotate(360deg); opacity: 0; }
+}
+.animate-float-up {
+  animation: float-up linear forwards;
+}
+
+/* 缓慢旋转（动物背景光晕） */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.animate-spin-slow {
+  animation: spin-slow 12s linear infinite;
+}
+
+/* 阴影脉动（动物脚下阴影） */
+@keyframes shadow-pulse {
+  0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.6; }
+  50%      { transform: translateX(-50%) scale(0.7); opacity: 0.3; }
+}
+.animate-shadow-pulse {
+  animation: shadow-pulse 1.5s ease-in-out infinite;
+}
