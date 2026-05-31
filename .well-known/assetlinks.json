@@ -1,0 +1,10 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.lazysheep.accounting",
+    "sha256_cert_fingerprints": [
+      "92:D9:7E:F0:C1:A9:15:BB:F3:10:68:7E:A2:F6:1A:43:BE:6C:43:A4:F4:BB:C6:2F:9B:F4:5D:3C:29:C6:A1:BD"
+    ]
+  }
+}]
