@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/lazy-sheep-accounting/sw.js', { scope: '/lazy-sheep-accounting/' })})}
