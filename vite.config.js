@@ -14,6 +14,7 @@ export default defineConfig({
       includeAssets: ['icon.svg', 'icon-512.png', 'icon-192.png'],
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,apk,woff2}'],
+        maximumFileSizeToCacheInBytes: 10 * 1024 * 1024,
         runtimeCaching: [
           {
             urlPattern: /^https?:\/\/.*/i,
