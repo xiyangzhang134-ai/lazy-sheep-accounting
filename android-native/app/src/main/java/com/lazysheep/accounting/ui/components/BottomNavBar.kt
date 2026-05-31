@@ -38,23 +38,22 @@ fun BottomNavBar(
         NavItem("achievement", "🏆", "成就")
     )
 
+    // Outer Box: push the nav bar 5mm (~19dp) up from screen bottom
     Box(
-        modifier = modifier.fillMaxWidth(),
-        contentAlignment = Alignment.BottomCenter
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(bottom = 18.dp),
+        contentAlignment = Alignment.Center
     ) {
         Row(
             modifier = Modifier
-                .clip(RoundedCornerShape(16.dp))
-                .background(Color.White.copy(alpha = 0.8f))
-                .padding(4.dp),
-            horizontalArrangement = Arrangement.spacedBy(4.dp)
+                .clip(RoundedCornerShape(12.dp))
+                .background(Color.White.copy(alpha = 0.85f))
+                .padding(2.dp),
+            horizontalArrangement = Arrangement.spacedBy(2.dp)
         ) {
             items.forEach { item ->
                 val isActive = currentRoute == item.route
-                val bgColor by animateColorAsState(
-                    if (isActive) Pink400 else Color.Transparent,
-                    label = "navBg"
-                )
                 val contentColor by animateColorAsState(
                     if (isActive) Color.White else Pink400.copy(alpha = 0.6f),
                     label = "navContent"
@@ -62,7 +61,7 @@ fun BottomNavBar(
 
                 Box(
                     modifier = Modifier
-                        .clip(RoundedCornerShape(12.dp))
+                        .clip(RoundedCornerShape(10.dp))
                         .then(
                             if (isActive) {
                                 Modifier.background(
@@ -74,12 +73,12 @@ fun BottomNavBar(
                             interactionSource = MutableInteractionSource(),
                             indication = null
                         ) { onNavigate(item.route) }
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                        .padding(horizontal = 14.dp, vertical = 5.dp)
                 ) {
                     Text(
                         text = "${item.emoji} ${item.label}",
                         color = contentColor,
-                        fontSize = 12.sp,
+                        fontSize = 11.sp,
                         fontWeight = FontWeight.Bold
                     )
                 }

@@ -136,7 +136,7 @@ fun HomeScreen(
                 onDelete = { id -> viewModel.deleteRecord(id) }
             )
 
-            Spacer(Modifier.height(80.dp)) // For bottom nav
+            Spacer(Modifier.height(12.dp))
         }
     }
 }

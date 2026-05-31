@@ -66,14 +66,7 @@ fun TrendScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text("📈 趋势分析", fontSize = 24.sp, fontWeight = FontWeight.ExtraBold, color = Pink500)
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    LazyDatePicker(dateStr = dateStr, onDateChange = { viewModel.setDateStr(it) })
-                    Text(
-                        "← 返回",
-                        modifier = Modifier.clip(RoundedCornerShape(10.dp)).background(Color.White.copy(alpha = 0.5f)).clickable { onBack() }.padding(horizontal = 12.dp, vertical = 6.dp),
-                        fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Pink400
-                    )
-                }
+                LazyDatePicker(dateStr = dateStr, onDateChange = { viewModel.setDateStr(it) })
             }
 
             Spacer(Modifier.height(16.dp))
@@ -147,7 +140,7 @@ fun TrendScreen(
                 }
             }
 
-            Spacer(Modifier.height(80.dp))
+            Spacer(Modifier.height(12.dp))
         }
     }
 }

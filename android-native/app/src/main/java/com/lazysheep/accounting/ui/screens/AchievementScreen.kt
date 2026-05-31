@@ -56,11 +56,6 @@ fun AchievementScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text("🏆 我的成就", fontSize = 24.sp, fontWeight = FontWeight.ExtraBold, color = Pink500)
-                Text(
-                    "← 返回记账",
-                    modifier = Modifier.clip(RoundedCornerShape(10.dp)).background(Color.White.copy(alpha = 0.5f)).clickable { onBack() }.padding(horizontal = 12.dp, vertical = 6.dp),
-                    fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Pink400
-                )
             }
 
             Spacer(Modifier.height(20.dp))
@@ -198,7 +193,7 @@ fun AchievementScreen(
                 }
             }
 
-            Spacer(Modifier.height(80.dp))
+            Spacer(Modifier.height(12.dp))
         }
     }
 }
