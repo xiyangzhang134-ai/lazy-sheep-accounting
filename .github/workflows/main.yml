@@ -1,0 +1,5 @@
+ 1. Compose InfiniteTransition 是 Android 原生动画引擎的核心 — 通过 animateFloat 为每种动物创建独立的无限循环参数（位移、旋转、缩放），7
+  种动物各有独特律动感。
+  2. GitHub Pages 部署路径：vite.config.js 的 base: '/lazy-sheep-accounting/' 确保所有资源路径正确。gh-pages 分支根目录的内容直接映射为网站根路径，APK 和
+  download.html 都是 public/ 目录下的静态文件。
+  3. APK 多渠道分发：同一个 APK 文件同时通过 GitHub Pages（HTTPS 直链）提供下载，Android 手机浏览器点击即可触发下载安装流程，无需应用商店审核。
