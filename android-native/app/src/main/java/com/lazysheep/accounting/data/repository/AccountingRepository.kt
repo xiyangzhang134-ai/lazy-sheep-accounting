@@ -14,8 +14,10 @@ class AccountingRepository(private val db: AppDatabase) {
 
     fun getAllRecords(): Flow<List<Record>> = db.recordDao().getAllRecords()
 
-    fun getRecordsByMonth(monthPrefix: String): Flow<List<Record>> =
-        db.recordDao().getRecordsByMonth(monthPrefix)
+    fun getRecordsByMonth(monthPrefix: String): Flow<List<Record>> = db.recordDao().getRecordsByMonth(monthPrefix)
+
+    fun getRecordsByDate(dateStr: String): Flow<List<Record>> =
+        db.recordDao().getRecordsByDate(dateStr)
 
     suspend fun addRecord(record: Record) = db.recordDao().insert(record)
 

@@ -12,6 +12,9 @@ interface RecordDao {
     @Query("SELECT * FROM records WHERE date LIKE :monthPrefix ORDER BY date DESC, id DESC")
     fun getRecordsByMonth(monthPrefix: String): Flow<List<Record>>
 
+    @Query("SELECT * FROM records WHERE date = :dateStr ORDER BY id DESC")
+    fun getRecordsByDate(dateStr: String): Flow<List<Record>>
+
     @Query("SELECT * FROM records ORDER BY date DESC, id DESC")
     suspend fun getAllRecordsOnce(): List<Record>
 
